@@ -1,0 +1,16 @@
+## .NET
+bin/
+obj/
+src/NQueens.Api/wwwroot/**
+!src/NQueens.Api/wwwroot/.gitkeep
+*.user
+*.suo
+.vs/
+
+## Node / Angular
+node_modules/
+dist/
+.angular/
+
+## OS
+.DS_Store

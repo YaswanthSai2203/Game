@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.26" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <SpaRoot>$(MSBuildThisFileDirectory)..\NQueens.Client\</SpaRoot>
+    <AngularBrowserOut>$(SpaRoot)dist\nqueens-client\browser\</AngularBrowserOut>
+  </PropertyGroup>
+
+  <Target Name="BuildAngularClient" BeforeTargets="BeforeBuild" Condition="Exists('$(SpaRoot)package.json') AND ('$(Configuration)' == 'Release' OR '$(RunAngularBuild)' == 'true')">
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm ci" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />
+    <ItemGroup>
+      <AngularFiles Include="$(AngularBrowserOut)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AngularFiles)" DestinationFolder="$(MSBuildThisFileDirectory)wwwroot\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

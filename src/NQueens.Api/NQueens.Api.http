@@ -1,0 +1,19 @@
+@NQueens.Api_HostAddress = http://localhost:5043
+
+### Start game (n = 8)
+POST {{NQueens.Api_HostAddress}}/api/games
+Content-Type: application/json
+
+{
+  "n": 8
+}
+
+### Toggle cell (replace GUID)
+@gameId = 00000000-0000-0000-0000-000000000000
+POST {{NQueens.Api_HostAddress}}/api/games/{{gameId}}/toggle
+Content-Type: application/json
+
+{
+  "row": 0,
+  "col": 0
+}

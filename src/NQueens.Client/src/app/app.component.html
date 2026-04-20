@@ -1,0 +1,60 @@
+<div class="page">
+  <header class="header">
+    <h1>N-Queens</h1>
+    <p class="lede">
+      Place {{ game()?.n ?? 'n' }} queens on the board so none share a row, column, or diagonal. Click a queen to remove it.
+    </p>
+  </header>
+
+  <section class="controls card">
+    <label class="field">
+      <span>Board size (n)</span>
+      <select [(ngModel)]="selectedSize" name="boardSize" [disabled]="loading()">
+        @for (n of boardSizes; track n) {
+          <option [ngValue]="n">{{ n }} × {{ n }}</option>
+        }
+      </select>
+    </label>
+    <button type="button" class="btn primary" (click)="startGame()" [disabled]="loading()">
+      {{ game() ? 'New game' : 'Start game' }}
+    </button>
+  </section>
+
+  @if (error()) {
+    <p class="banner error" role="alert">{{ error() }}</p>
+  }
+
+  @if (game(); as g) {
+    <section class="status card">
+      <p class="status-line">{{ statusText() }}</p>
+      @if (solutionHint(); as hint) {
+        <p class="hint">{{ hint }}</p>
+      }
+    </section>
+
+    <div
+      class="board"
+      [style.--n]="g.n"
+      [class.solved]="g.solved"
+      [attr.aria-label]="'Chessboard ' + g.n + ' by ' + g.n"
+    >
+      @for (row of g.grid; track $index; let r = $index) {
+        @for (cell of row; track $index; let c = $index) {
+          <button
+            type="button"
+            class="cell"
+            [class.dark]="(r + c) % 2 === 1"
+            [class.queen]="isQueen(r, c)"
+            (click)="onCellClick(r, c)"
+            [disabled]="loading()"
+            [attr.aria-label]="'Square row ' + (r + 1) + ' column ' + (c + 1)"
+          >
+            <span class="glyph" aria-hidden="true">{{ cellLabel(r, c) }}</span>
+          </button>
+        }
+      }
+    </div>
+  } @else {
+    <p class="placeholder">Choose a size and start a game. The API runs on port 5043; use <code>ng serve</code> so requests proxy to the backend.</p>
+  }
+</div>

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using NQueens.Api;
 using NQueens.Api.Models;
 using NQueens.Api.Services;
 
@@ -92,6 +93,8 @@ games.MapDelete("/{id:guid}", (Guid id, GameSessionStore store) =>
     store.Remove(id);
     return Results.NoContent();
 });
+
+app.MapStripePayments();
 
 app.MapFallbackToFile("index.html");
 

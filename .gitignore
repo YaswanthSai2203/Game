@@ -3,6 +3,8 @@ bin/
 obj/
 src/NQueens.Api/wwwroot/**
 !src/NQueens.Api/wwwroot/.gitkeep
+src/CourtFinance.Api/wwwroot/**
+!src/CourtFinance.Api/wwwroot/.gitkeep
 *.user
 *.suo
 .vs/

@@ -1,0 +1,7 @@
+### Court Finance API
+
+Run against SQL Server after applying `database/CourtFinance.sql`. Adjust `ConnectionStrings:CourtFinanceDatabase` for your on-premises instance (Windows auth shown; use `User Id` / `Password` for SQL auth).
+
+```http
+GET http://localhost:5244/api/dashboard/summary
+```

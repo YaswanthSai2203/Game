@@ -1,0 +1,68 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.app-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mark {
+  width: 10px;
+  height: 36px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #1d4ed8, #0f172a);
+}
+
+.title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 500;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+}
+
+.nav a:hover {
+  color: #0f172a;
+  background: #f1f5f9;
+}
+
+.nav a.active {
+  color: #1d4ed8;
+  background: #eff6ff;
+}
+
+.main {
+  flex: 1;
+  padding: 1.5rem;
+}

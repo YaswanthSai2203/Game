@@ -1,0 +1,61 @@
+<div class="page">
+  <header class="page-header">
+    <div>
+      <h1>Dashboard</h1>
+      <p class="lede">Appropriations and disbursement activity for the active fiscal year.</p>
+    </div>
+    <a routerLink="/disbursements" class="btn secondary">View disbursements</a>
+  </header>
+
+  @if (loading) {
+    <p class="muted">Loading…</p>
+  }
+
+  @if (error) {
+    <div class="callout warn" role="alert">{{ error }}</div>
+  }
+
+  @if (summary) {
+    <section class="grid metrics">
+      <article class="card">
+        <h2>Fiscal year</h2>
+        <p class="metric">{{ summary.fiscalYearLabel }}</p>
+      </article>
+      <article class="card">
+        <h2>Total appropriated</h2>
+        <p class="metric">{{ summary.totalAppropriated | currency }}</p>
+      </article>
+      <article class="card">
+        <h2>Paid (YTD)</h2>
+        <p class="metric">{{ summary.totalPaidDisbursements | currency }}</p>
+      </article>
+      <article class="card">
+        <h2>Outstanding committed</h2>
+        <p class="metric">{{ summary.outstandingCommitted | currency }}</p>
+        <p class="muted small">Submitted or approved, not yet paid.</p>
+      </article>
+    </section>
+
+    @if (utilizationPercent() !== null) {
+      <section class="card">
+        <h2>Utilization (paid / appropriated)</h2>
+        <div class="bar">
+          <div class="bar-fill" [style.width.%]="utilizationPercent()!"></div>
+        </div>
+        <p class="muted small">{{ utilizationPercent() }}% of appropriations recognized as paid disbursements.</p>
+      </section>
+    }
+
+    <section class="card">
+      <h2>Disbursements by status</h2>
+      <ul class="status-list">
+        @for (row of statusEntries(); track row.key) {
+          <li>
+            <span class="status-pill">{{ row.key }}</span>
+            <span class="count">{{ row.value }}</span>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+</div>

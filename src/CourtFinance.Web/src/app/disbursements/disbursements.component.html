@@ -1,0 +1,130 @@
+<div class="page">
+  <header class="page-header">
+    <div>
+      <h1>Disbursements</h1>
+      <p class="lede">Court-related payables: reporters, appointed counsel, facilities, and other vendor payments.</p>
+    </div>
+    <a routerLink="/" class="btn secondary">Back to dashboard</a>
+  </header>
+
+  @if (listError) {
+    <div class="callout warn" role="alert">{{ listError }}</div>
+  }
+
+  <section class="card">
+    <h2>New draft</h2>
+    @if (formError) {
+      <div class="callout warn" role="alert">{{ formError }}</div>
+    }
+    @if (formMessage) {
+      <div class="callout ok" role="status">{{ formMessage }}</div>
+    }
+
+    <div class="form-grid">
+      <label>
+        <span>Fiscal year</span>
+        <select [(ngModel)]="formFiscalYearId" name="fy">
+          @for (y of fiscalYears; track y.id) {
+            <option [ngValue]="y.id">{{ y.label }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span>Department</span>
+        <select [(ngModel)]="formDepartmentId" name="dept">
+          <option [ngValue]="null">Select…</option>
+          @for (d of departments; track d.id) {
+            <option [ngValue]="d.id">{{ d.code }} — {{ d.name }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span>Fund</span>
+        <select [(ngModel)]="formFundId" name="fund">
+          <option [ngValue]="null">Select…</option>
+          @for (f of funds; track f.id) {
+            <option [ngValue]="f.id">{{ f.code }} — {{ f.name }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span>GL account</span>
+        <select [(ngModel)]="formGlAccountId" name="gl">
+          <option [ngValue]="null">Select…</option>
+          @for (a of glAccounts; track a.id) {
+            <option [ngValue]="a.id">{{ a.accountNumber }} — {{ a.description }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span>Vendor</span>
+        <select [(ngModel)]="formVendorId" name="vendor">
+          <option [ngValue]="null">Select…</option>
+          @for (v of vendors; track v.id) {
+            <option [ngValue]="v.id">{{ v.code }} — {{ v.name }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span>Court case (optional)</span>
+        <select [(ngModel)]="formCourtCaseId" name="case">
+          <option [ngValue]="null">None</option>
+          @for (c of courtCases; track c.id) {
+            <option [ngValue]="c.id">{{ c.caseNumber }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span>Amount</span>
+        <input type="number" min="0.01" step="0.01" [(ngModel)]="formAmount" name="amount" />
+      </label>
+      <label>
+        <span>Request date</span>
+        <input type="date" [(ngModel)]="formRequestDate" name="reqdate" />
+      </label>
+      <label class="wide">
+        <span>Description</span>
+        <textarea rows="2" [(ngModel)]="formDescription" name="desc"></textarea>
+      </label>
+    </div>
+    <button type="button" class="btn" (click)="submit()">Save draft</button>
+  </section>
+
+  <section class="card">
+    <h2>Open items</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Dept</th>
+            <th>Vendor</th>
+            <th>Case</th>
+            <th class="num">Amount</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.id) {
+            <tr>
+              <td>{{ row.requestDate }}</td>
+              <td>{{ row.departmentCode }}</td>
+              <td>{{ row.vendorName }}</td>
+              <td>{{ row.caseNumber ?? '—' }}</td>
+              <td class="num">{{ row.amount | currency }}</td>
+              <td><span class="pill">{{ row.status }}</span></td>
+              <td class="actions">
+                @for (a of actionsFor(row); track a.label) {
+                  <button type="button" class="btn small secondary" (click)="advance(row, a.next)">
+                    {{ a.label }}
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

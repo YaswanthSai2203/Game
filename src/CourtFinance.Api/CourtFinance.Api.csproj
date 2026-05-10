@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>CourtFinance.Api</RootNamespace>
+    <AssemblyName>CourtFinance.Api</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <SpaRoot>$(MSBuildThisFileDirectory)..\CourtFinance.Web\</SpaRoot>
+    <AngularBrowserOut>$(SpaRoot)dist\court-finance-web\browser\</AngularBrowserOut>
+  </PropertyGroup>
+
+  <Target Name="BuildAngularClient" BeforeTargets="BeforeBuild" Condition="Exists('$(SpaRoot)package.json') AND ('$(Configuration)' == 'Release' OR '$(RunAngularBuild)' == 'true')">
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm ci" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />
+    <ItemGroup>
+      <AngularFiles Include="$(AngularBrowserOut)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AngularFiles)" DestinationFolder="$(MSBuildThisFileDirectory)wwwroot\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

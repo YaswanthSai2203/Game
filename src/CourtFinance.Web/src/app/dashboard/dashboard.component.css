@@ -1,0 +1,68 @@
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.lede {
+  color: var(--muted);
+  margin: 0.25rem 0 0;
+}
+
+.metrics {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.metric {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.25rem 0 0;
+}
+
+.bar {
+  height: 10px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1d4ed8, #2563eb);
+  border-radius: 999px;
+  max-width: 100%;
+}
+
+.status-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.status-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.status-pill {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+}
